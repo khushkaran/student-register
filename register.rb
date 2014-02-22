@@ -1,3 +1,5 @@
+text_width = 75
+
 # Prepare students and absent students array
 students = [
   {:first_name => "Jasminder", :middle_name => "Kaur", :last_name => "Bajwa"},
@@ -21,23 +23,26 @@ def print_s(students)
 end
 
 # Print instructions and some information
-def print_header
-  puts "Welcome to the register. Enter 'P' for Present, 'A' for Absent, 'L' for Late"
+def print_header(text_width)
+  puts "=================".center(text_width)
+  puts "Welcome to the Register".center(text_width)
+  puts "Enter 'P' for Present, 'A' for Absent, 'L' for Late".center(text_width)
+  puts "=================".center(text_width)
 end
 
-def check_student_attendence(students)
+def check_student_attendence(students,text_width)
   # Create counters for present and absent
   student_data = {:present => 0, :absent => 0, :late => 0, :absent_students => [], :late_students => []}
 
   # Iterate through students arrary
   students.each { |student|
-    puts "#{student[:first_name]} #{student[:middle_name]} #{student[:last_name]}".sub '  ', ' '
-
+    student_name = "#{student[:first_name]} #{student[:middle_name]} #{student[:last_name]}".sub '  ', ' '
+    puts student_name.center(text_width)
     # Get input on whether student is present or absent
     attendence = gets.chomp.upcase
     until attendence == "P" || attendence == "A" || attendence == "L"
-      puts "Incorrect Entry, please enter 'P' for Present, 'A' for Absent 'L' for Late"
-      puts "#{student[:first_name]} #{student[:middle_name]} #{student[:last_name]}".sub '  ', ' '
+      puts "Incorrect Entry, please enter 'P' for Present, 'A' for Absent 'L' for Late".center(text_width)
+      puts student_name.center(text_width)
       attendence = gets.chomp.upcase
     end
 
@@ -56,20 +61,26 @@ def check_student_attendence(students)
 end
 
 # Print footer, and provide information to teacher
-def print_footer(students, student_data)
-  puts "That is the end of the register of #{students.length} student#{print_s(students)}"
-  puts "#{student_data[:present]} are present, #{student_data[:absent]} are absent and #{student_data[:late]}. Please contact the parents of:"
-  puts "================="
-  puts "Late"
-  puts "================="
-  puts student_data[:late_students]
-  puts "================="
-  puts "Absent"
-  puts "================="
-  puts student_data[:absent_students]
+def print_footer(students, student_data, text_width)
+  print "\n"
+  puts "=================".center(text_width)
+  puts "That is the end of the register of #{students.length} student#{print_s(students)}".center(text_width)
+  puts "#{student_data[:present]} are present, #{student_data[:absent]} are absent and #{student_data[:late]}. Please contact the parents of:".center(text_width)
+  print "\n"
+  puts "==== Late ====".center(text_width)
+  student_data[:late_students].each { |student|
+    puts student.center(text_width)
+  }
+  #puts student_data[:late_students].center(text_width)
+  print "\n"
+  puts "==== Absent ====".center(text_width)
+  #puts student_data[:absent_students].center(text_width)
+  student_data[:absent_students].each { |student|
+    puts student.center(text_width)
+  }
 end
 
-print_header
-student_data = check_student_attendence(students)
-print_footer(students, student_data)
+print_header(text_width)
+student_data = check_student_attendence(students,text_width)
+print_footer(students, student_data, text_width)
 
