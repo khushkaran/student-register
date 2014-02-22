@@ -13,14 +13,15 @@ students = [
   {:first_name => "Jasleen", :middle_name => "Kaur", :last_name => "Dwarika"}
 ]
 
+# Allows plural of student
 def print_s(students)
   if students.length != 1
     return "s"
   end
 end
 
+# Print instructions and some information
 def print_header
-  # Print instructions and some information
   puts "Welcome to the register. Enter 'P' for Present, 'A' for Absent."
 end
 
@@ -36,19 +37,17 @@ def check_student_attendence(students)
     attendence = gets.chomp.upcase
     until attendence == "P" || attendence == "A"
       puts "Incorrect Entry, please enter 'P' for Present or 'A' for Absent"
-      student_name = "#{student[:first_name]} #{student[:middle_name]} #{student[:last_name]}".sub '  ', ' '
+      puts "#{student[:first_name]} #{student[:middle_name]} #{student[:last_name]}".sub '  ', ' '
       attendence = gets.chomp.upcase
     end
-    if attendence == "P"
-      student_data[:present] += 1
-    elsif attendence == "A"
-      student_data[:absent] += 1
-      student_data[:absent_students] << student[:first_name]
-    end
+
+    # Add data from entry 
+    attendence == "P" ? student_data[:present] += 1 : (student_data[:absent] += 1 ; student_data[:absent_students] << student[:first_name])
   }
   return student_data
 end
 
+# Print footer, and provide information to teacher
 def print_footer(students, student_data)
   puts "That is the end of the register of #{students.length} student#{print_s(students)}"
   puts "#{student_data[:present]} are present and #{student_data[:absent]} are absent. Please contact the parents of:"
