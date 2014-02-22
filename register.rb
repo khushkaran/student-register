@@ -13,8 +13,6 @@ students = [
   {:first_name => "Jasleen", :middle_name => "Kaur", :last_name => "Dwarika"}
 ]
 
-absent_students = []
-
 def print_s(students)
   if students.length != 1
     return "s"
@@ -28,7 +26,7 @@ end
 
 def check_student_attendence(students)
   # Create counters for present and absent
-  student_counter = {:present => 0, :absent =>0}
+  student_data = {:present => 0, :absent => 0, :absent_students => []}
 
   # Iterate through students arrary
   students.each { |student|
@@ -42,21 +40,22 @@ def check_student_attendence(students)
       attendence = gets.chomp.upcase
     end
     if attendence == "P"
-      student_counter[:present] += 1
-      puts student_counter [:present]
+      student_data[:present] += 1
     elsif attendence == "A"
-      student_counter[:absent] += 1
-      puts student_counter[:absent]
+      student_data[:absent] += 1
+      student_data[:absent_students] << student[:first_name]
     end
   }
+  return student_data
 end
 
-def print_footer(students)
+def print_footer(students, student_data)
   puts "That is the end of the register of #{students.length} student#{print_s(students)}"
-  puts "number are present and number are absent. Please contact the parents of: "
+  puts "#{student_data[:present]} are present and #{student_data[:absent]} are absent. Please contact the parents of:"
+  puts student_data[:absent_students]
 end
 
 print_header
-check_student_attendence(students)
-print_footer(students)
+student_data = check_student_attendence(students)
+print_footer(students, student_data)
 
