@@ -26,13 +26,13 @@ end
 def print_header(text_width)
   puts "=================".center(text_width)
   puts "Welcome to the Register".center(text_width)
-  puts "Enter 'P' for Present, 'A' for Absent, 'L' for Late".center(text_width)
+  puts "Enter 'P' for Present, 'A' for Absent, 'L' for Late, 'M' for Medical, 'H' for Holiday".center(text_width)
   puts "=================".center(text_width)
 end
 
 def check_student_attendence(students,text_width)
   # Create counters for present and absent
-  student_data = {:present => 0, :absent => 0, :late => 0, :absent_students => [], :late_students => []}
+  student_data = {:present => 0, :absent => 0, :late => 0, :medical => 0, :holiday => 0, :absent_students => [], :late_students => [], :medical_students => [], :holiday_students => []}
 
   # Iterate through students arrary
   students.each { |student|
@@ -40,8 +40,8 @@ def check_student_attendence(students,text_width)
     puts student_name.center(text_width)
     # Get input on whether student is present or absent
     attendence = gets.chomp.upcase
-    until attendence == "P" || attendence == "A" || attendence == "L"
-      puts "Incorrect Entry, please enter 'P' for Present, 'A' for Absent 'L' for Late".center(text_width)
+    until attendence == "P" || attendence == "A" || attendence == "L" || attendence == "M" || attendence == "H"
+      puts "Incorrect Entry, please enter 'P' for Present, 'A' for Absent 'L' for Late, 'M' for Medical, 'H' for Holiday".center(text_width)
       puts student_name.center(text_width)
       attendence = gets.chomp.upcase
     end
@@ -55,6 +55,12 @@ def check_student_attendence(students,text_width)
     elsif attendence == "L"
       student_data[:late] += 1
       student_data[:late_students] << student[:first_name]
+    elsif attendence == "M"
+      student_data[:medical] += 1
+      student_data[:medical_students] << student[:first_name]
+    elsif attendence == "H"
+      student_data[:holiday] += 1
+      student_data[:holiday_students] << student[:first_name]
     end
   }
   return student_data
@@ -66,7 +72,28 @@ def print_footer(students, student_data, text_width)
   puts "=================".center(text_width)
   puts "That is the end of the register of #{students.length} student#{print_s(students)}".center(text_width)
   puts "#{student_data[:present]} are present, #{student_data[:absent]} are absent and #{student_data[:late]} are late.".center(text_width)
+  if student_data[:holiday] != 0 || student_data[:medical] != 0
+    puts "#{student_data[:holiday]} are on holiday and #{student_data[:medical]} are on medical leave".center(text_width)
+  end
+
+  if student_data[:holiday] != 0
+    print "\n"
+    puts "==== Students on Holiday ====".center(text_width)
+    student_data[:holiday_students].each { |student|
+      puts student.center(text_width)
+    }
+  end
+
+  if student_data[:medical] != 0
+    print "\n"
+    puts "==== Students on Medical Leave ====".center(text_width)
+    student_data[:medical_students].each { |student|
+      puts student.center(text_width)
+    }
+  end
+
   if student_data[:late] != 0 || student_data[:absent] != 0
+    print "\n"
     puts "Please contact the parents of:".center(text_width)
   end
   if student_data[:late] != 0
