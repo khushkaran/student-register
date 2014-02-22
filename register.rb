@@ -65,19 +65,25 @@ def print_footer(students, student_data, text_width)
   print "\n"
   puts "=================".center(text_width)
   puts "That is the end of the register of #{students.length} student#{print_s(students)}".center(text_width)
-  puts "#{student_data[:present]} are present, #{student_data[:absent]} are absent and #{student_data[:late]}. Please contact the parents of:".center(text_width)
-  print "\n"
-  puts "==== Late ====".center(text_width)
-  student_data[:late_students].each { |student|
-    puts student.center(text_width)
-  }
-  #puts student_data[:late_students].center(text_width)
-  print "\n"
-  puts "==== Absent ====".center(text_width)
-  #puts student_data[:absent_students].center(text_width)
-  student_data[:absent_students].each { |student|
-    puts student.center(text_width)
-  }
+  puts "#{student_data[:present]} are present, #{student_data[:absent]} are absent and #{student_data[:late]} are late.".center(text_width)
+  if student_data[:late] != 0 || student_data[:absent] != 0
+    puts "Please contact the parents of:".center(text_width)
+  end
+  if student_data[:late] != 0
+    print "\n"
+    puts "==== Late ====".center(text_width)
+    student_data[:late_students].each { |student|
+      puts student.center(text_width)
+    }
+  end
+
+  if student_data[:absent] != 0
+    print "\n"
+    puts "==== Absent ====".center(text_width)
+    student_data[:absent_students].each { |student|
+      puts student.center(text_width)
+    }
+  end
 end
 
 print_header(text_width)
