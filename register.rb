@@ -30,13 +30,13 @@ def check_student_attendence(students)
 
   # Iterate through students arrary
   students.each { |student|
-    puts "#{student[:first_name]} #{student[:middle_name]} #{student[:last_name]}"
+    puts "#{student[:first_name]} #{student[:middle_name]} #{student[:last_name]}".sub '  ', ' '
 
     # Get input on whether student is present or absent
     attendence = gets.chomp.upcase
     until attendence == "P" || attendence == "A"
       puts "Incorrect Entry, please enter 'P' for Present or 'A' for Absent"
-      puts "#{student[:first_name]} #{student[:middle_name]} #{student[:last_name]}"
+      student_name = "#{student[:first_name]} #{student[:middle_name]} #{student[:last_name]}".sub '  ', ' '
       attendence = gets.chomp.upcase
     end
     if attendence == "P"
