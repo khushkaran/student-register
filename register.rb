@@ -20,13 +20,16 @@ end
 def check_student_attendence(students)
   students.each { |student|
     puts student[:name]
-    attendence = gets.chomp
+    attendence = gets.chomp.upcase
+    until attendence == "P" || attendence == "A"
+      puts "Incorrect Entry, please enter 'P' for Present or 'A' for Absent"
+      puts student[:name]
+      attendence = gets.chomp.upcase
+    end
     if attendence == "P"
       puts "Present"
     elsif attendence == "A"
       puts "Absent"
-    else
-      # Do something!
     end
   }
 end
