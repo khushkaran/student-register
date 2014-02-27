@@ -1,7 +1,7 @@
 Student Register
 =================
 
-The student register script allows you to check if how many students have arrived to class
+The student register script allows you to check how many students have arrived to class.
 
 How to use
 ==========
